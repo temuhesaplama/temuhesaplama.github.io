@@ -11,6 +11,7 @@
       --bg1:#0b1220; --bg2:#111827; --card:#172033; --line:#2e3b5b;
       --text:#f8fafc; --muted:#cbd5e1; --green:#22c55e; --red:#ef4444;
       --yellow:#facc15; --blue:#38bdf8; --purple:#a78bfa; --orange:#fb923c;
+      --soft:#101827; --soft2:#0f172a;
     }
     html{scroll-behavior:smooth}
     body{
@@ -107,11 +108,95 @@
     .faq-item p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
     .ad-box{margin-top:18px;border:1px dashed rgba(255,255,255,.18);border-radius:16px;padding:18px;text-align:center;color:#94a3b8;background:rgba(255,255,255,.02);font-size:14px;line-height:1.6}
     .footer-box{margin-top:18px;text-align:center;color:#94a3b8;font-size:13px;line-height:1.7;padding-bottom:20px}
-    @media (max-width:1180px){.hero,.grid,.lead-grid{grid-template-columns:1fr}.features{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:900px){.results-grid.three{grid-template-columns:repeat(2,1fr)}}
+
+    /* 4. bölüm için özel düzen */
+    .pro-top-summary{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-bottom:14px;
+    }
+    .summary-card{
+      background:linear-gradient(180deg,#0f172a,#0c1426);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      min-height:110px;
+    }
+    .summary-label{
+      color:#94a3b8;
+      font-size:12px;
+      margin-bottom:10px;
+      line-height:1.4;
+    }
+    .summary-value{
+      font-size:26px;
+      font-weight:700;
+      line-height:1.2;
+    }
+    .pro-insight-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    .insight-card{
+      background:#0f172a;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+    }
+    .insight-card h3{
+      margin:0 0 10px;
+      font-size:16px;
+    }
+    .insight-sub{
+      color:#94a3b8;
+      font-size:12px;
+      margin-bottom:10px;
+      line-height:1.5;
+    }
+    .pro-pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:8px;
+    }
+    .mini-pill{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#101827;
+      color:#cbd5e1;
+      font-size:12px;
+    }
+    .decision-card{
+      margin-top:14px;
+      background:linear-gradient(180deg, rgba(56,189,248,.08), rgba(167,139,250,.06));
+      border:1px solid rgba(56,189,248,.20);
+      border-radius:16px;
+      padding:16px;
+    }
+    .decision-card h3{
+      margin:0 0 10px;
+      font-size:16px;
+    }
+
+    @media (max-width:1180px){
+      .hero,.grid,.lead-grid{grid-template-columns:1fr}
+      .features{grid-template-columns:repeat(2,1fr)}
+      .pro-top-summary{grid-template-columns:repeat(2,1fr)}
+      .pro-insight-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:900px){
+      .results-grid.three{grid-template-columns:repeat(2,1fr)}
+    }
     @media (max-width:700px){
-      .form-grid,.results-grid,.results-grid.three,.btn-row,.features{grid-template-columns:1fr}
-      .brand h1,.hero h2{font-size:28px}.result-value{font-size:21px}
+      .form-grid,.results-grid,.results-grid.three,.btn-row,.features,.pro-top-summary{
+        grid-template-columns:1fr
+      }
+      .brand h1,.hero h2{font-size:28px}
+      .result-value,.summary-value{font-size:21px}
     }
   </style>
 </head>
@@ -365,13 +450,14 @@
       </div>
     </div>
 
-    <!-- 4 -->
+    <!-- 4 Düzenlenmiş -->
     <div id="trendyolProPage" class="page">
       <div class="grid">
         <div class="card">
           <h2 class="section-title">Trendyol Pro Hesaplama</h2>
           <p class="mini">
-            Bu bölüm Trendyol tarafını daha kusursuz modellemek için eklendi. Kategori preset’i, teslimat tipine göre platform hizmet bedeli, stopaj ve karar destek alanı içerir.
+            Bu bölüm Trendyol tarafını daha anlaşılır ve profesyonel göstermek için sadeleştirildi.
+            Önce satış senaryonu kur, sonra aşağıda Trendyol ve Temu tarafında ne olduğunu tek bakışta gör.
           </p>
           <div class="form-grid">
             <div>
@@ -391,7 +477,7 @@
                 <option value="mucevher">Mücevher</option>
               </select>
             </div>
-            <div><label for="p_komisyon">Komisyon Oranı (%)</label><input type="number" id="p_komisyon" step="0.01" value="21"></div>
+            <div><label for="p_komisyon">Komisyon Oranı (%)</label><input type="number" id="p_komisyon" step="0.01" value="21.5"></div>
             <div>
               <label for="p_teslimatTipi">Teslimat Tipi</label>
               <select id="p_teslimatTipi" onchange="trendyolProTeslimatSecildi()">
@@ -418,30 +504,90 @@
             <button class="action btn-secondary" onclick="sifirlaTrendyolPro()">Sıfırla</button>
           </div>
           <div class="note">
-            Bu modda platform hizmet bedeli teslimat tipine göre otomatik doldurulur. İstersen manuel değiştirebilirsin.
+            Bu modda platform hizmet bedeli teslimat tipine göre otomatik gelir. Manuel değiştirmek istersen kutu açık bırakıldı.
           </div>
           <div id="p_uyari" class="warn">Kategori ve teslimat tipini seçip “Pro Hesapla” butonuna bas.</div>
         </div>
 
         <div class="card">
           <h2 class="section-title">Trendyol Pro Sonuçları</h2>
-          <div class="results-grid three">
-            <div class="result-box"><div class="result-title">Komisyon Oranı</div><div class="result-value blue" id="p_sonucKomisyon">%0.00</div></div>
-            <div class="result-box"><div class="result-title">Platform Hizmet Bedeli</div><div class="result-value blue" id="p_sonucHizmet">0.00 ₺</div></div>
-            <div class="result-box"><div class="result-title">Toplam Kargo</div><div class="result-value blue" id="p_sonucKargo">0.00 ₺</div></div>
-            <div class="result-box"><div class="result-title">Toplam Kesinti</div><div class="result-value red" id="p_sonucKesinti">0.00 ₺</div></div>
-            <div class="result-box"><div class="result-title">Satıcıya Kalan Tutar</div><div class="result-value white" id="p_sonucKalan">0.00 ₺</div></div>
-            <div class="result-box"><div class="result-title">Net Kâr</div><div class="result-value" id="p_sonucNetKar">0.00 ₺</div></div>
-            <div class="result-box"><div class="result-title">Kâr Marjı</div><div class="result-value" id="p_sonucKarMarji">%0.00</div></div>
-            <div class="result-box"><div class="result-title">Başa Baş Fiyat</div><div class="result-value yellow" id="p_sonucBasabas">0.00 ₺</div></div>
-            <div class="result-box"><div class="result-title">Önerilen Satış Fiyatı</div><div class="result-value orange" id="p_sonucOnerilen">0.00 ₺</div></div>
-            <div class="result-box"><div class="result-title">Temu Referans Temel Fiyat</div><div class="result-value yellow" id="p_sonucTemuTemel">0.00 ₺</div></div>
-            <div class="result-box"><div class="result-title">Temu Tahmini Müşteri Fiyatı</div><div class="result-value purple" id="p_sonucTemuMusteri">0.00 ₺</div></div>
-            <div class="result-box"><div class="result-title">Durum</div><div id="p_sonucDurumWrap"><span id="p_sonucDurum" class="risk-badge risk-medium">Bekleniyor</span></div></div>
+
+          <div class="pro-top-summary">
+            <div class="summary-card">
+              <div class="summary-label">Bu satışta Trendyol net kârın</div>
+              <div class="summary-value green" id="p_sonucNetKar">0.00 ₺</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-label">Başa baş satış fiyatın</div>
+              <div class="summary-value yellow" id="p_sonucBasabas">0.00 ₺</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-label">Hedef kâr için önerilen satış fiyatı</div>
+              <div class="summary-value orange" id="p_sonucOnerilen">0.00 ₺</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-label">Durum</div>
+              <div id="p_sonucDurumWrap">
+                <span id="p_sonucDurum" class="risk-badge risk-medium">Bekleniyor</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pro-insight-grid">
+            <div class="insight-card">
+              <h3>Trendyol Özeti</h3>
+              <div class="insight-sub">Trendyol tarafında ne kaldığını hızlıca gör.</div>
+              <div class="results-grid">
+                <div class="result-box">
+                  <div class="result-title">Komisyon Oranı</div>
+                  <div class="result-value blue" id="p_sonucKomisyon">%0.00</div>
+                </div>
+                <div class="result-box">
+                  <div class="result-title">Platform Hizmet Bedeli</div>
+                  <div class="result-value blue" id="p_sonucHizmet">0.00 ₺</div>
+                </div>
+                <div class="result-box">
+                  <div class="result-title">Toplam Kargo</div>
+                  <div class="result-value blue" id="p_sonucKargo">0.00 ₺</div>
+                </div>
+                <div class="result-box">
+                  <div class="result-title">Toplam Kesinti</div>
+                  <div class="result-value red" id="p_sonucKesinti">0.00 ₺</div>
+                </div>
+                <div class="result-box">
+                  <div class="result-title">Satıcıya Kalan Tutar</div>
+                  <div class="result-value white" id="p_sonucKalan">0.00 ₺</div>
+                </div>
+                <div class="result-box">
+                  <div class="result-title">Kâr Marjı</div>
+                  <div class="result-value" id="p_sonucKarMarji">%0.00</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="insight-card">
+              <h3>Temu Referans Özeti</h3>
+              <div class="insight-sub">Bu Trendyol senaryosundan Temu’ya taşıyabileceğin referans değerler.</div>
+              <div class="results-grid">
+                <div class="result-box">
+                  <div class="result-title">Temu Referans Temel Fiyat</div>
+                  <div class="result-value yellow" id="p_sonucTemuTemel">0.00 ₺</div>
+                </div>
+                <div class="result-box">
+                  <div class="result-title">Temu Tahmini Müşteri Fiyatı</div>
+                  <div class="result-value purple" id="p_sonucTemuMusteri">0.00 ₺</div>
+                </div>
+              </div>
+              <div class="pro-pill-row">
+                <span class="mini-pill">Temu tarafı referans amaçlıdır</span>
+                <span class="mini-pill">Müşteri fiyatı tahminidir</span>
+                <span class="mini-pill">Temel fiyat KDV hariç mantıkla çıkar</span>
+              </div>
+            </div>
           </div>
 
           <div class="subcard">
-            <h3>Trendyol Pro Detay</h3>
+            <h3>Kesinti ve Kârlılık Detayı</h3>
             <div class="breakdown">
               <div>Satış fiyatı</div><div id="p_bSatis">0.00 ₺</div>
               <div>KDV hariç baz</div><div id="p_bBaz">0.00 ₺</div>
@@ -458,7 +604,7 @@
             </div>
           </div>
 
-          <div class="subcard">
+          <div class="decision-card">
             <h3>Karar Kutusu</h3>
             <div id="p_kararKutusu" class="warn">Hesaplama sonrası burada profesyonel yorum görünecek.</div>
           </div>
@@ -845,11 +991,13 @@
       setText("p_sonucOnerilen", para(onerilen));
       setText("p_sonucTemuTemel", para(temuTemel));
       setText("p_sonucTemuMusteri", para(temuMusteri));
+
       setProfitColor("p_sonucNetKar", netKar);
       setProfitColor("p_sonucKarMarji", karMarji);
 
       const durumEl = document.getElementById("p_sonucDurum");
-      durumEl.className = risk.durumClass; durumEl.textContent = risk.durumText;
+      durumEl.className = risk.durumClass;
+      durumEl.textContent = risk.durumText;
 
       setText("p_bSatis", para(satisFiyati));
       setText("p_bBaz", para(satisBaz));
@@ -866,6 +1014,7 @@
 
       const uyari = document.getElementById("p_uyari");
       const kararKutusu = document.getElementById("p_kararKutusu");
+
       if (!satisFiyati || !alisFiyati){
         uyari.className = "warn danger";
         uyari.textContent = "Satış fiyatı ve ürün maliyetini girmen gerekiyor.";
@@ -966,12 +1115,21 @@
       document.getElementById("p_ekGider").value = "0";
       document.getElementById("p_hedefKar").value = "100";
       document.getElementById("p_temuServis").value = "11";
+
       ["p_sonucHizmet","p_sonucKargo","p_sonucKesinti","p_sonucKalan","p_sonucNetKar","p_sonucBasabas","p_sonucOnerilen","p_sonucTemuTemel","p_sonucTemuMusteri"].forEach(id => setText(id, "0.00 ₺"));
-      setText("p_sonucKomisyon", "%0.00"); setText("p_sonucKarMarji", "%0.00");
+      setText("p_sonucKomisyon", "%0.00");
+      setText("p_sonucKarMarji", "%0.00");
       ["p_bSatis","p_bBaz","p_bKomisyon","p_bKomisyonKdv","p_bStopaj","p_bHizmet","p_bKupon","p_bKargo","p_bEkGider","p_bKesinti","p_bKalan","p_bNetKar"].forEach(id => setText(id, "0.00 ₺"));
-      const durumEl = document.getElementById("p_sonucDurum"); durumEl.className = "risk-badge risk-medium"; durumEl.textContent = "Bekleniyor";
-      document.getElementById("p_uyari").className = "warn"; document.getElementById("p_uyari").textContent = "Kategori ve teslimat tipini seçip “Pro Hesapla” butonuna bas.";
-      document.getElementById("p_kararKutusu").className = "warn"; document.getElementById("p_kararKutusu").textContent = "Hesaplama sonrası burada profesyonel yorum görünecek.";
+
+      const durumEl = document.getElementById("p_sonucDurum");
+      durumEl.className = "risk-badge risk-medium";
+      durumEl.textContent = "Bekleniyor";
+
+      document.getElementById("p_uyari").className = "warn";
+      document.getElementById("p_uyari").textContent = "Kategori ve teslimat tipini seçip “Pro Hesapla” butonuna bas.";
+
+      document.getElementById("p_kararKutusu").className = "warn";
+      document.getElementById("p_kararKutusu").textContent = "Hesaplama sonrası burada profesyonel yorum görünecek.";
     }
 
     function fakeLeadSubmit(){
@@ -980,8 +1138,13 @@
       const email = document.getElementById("leadEmail").value.trim();
       const msg = document.getElementById("leadMessage").value.trim();
       const box = document.getElementById("leadUyari");
-      if(!name || (!phone && !email) || !msg){ box.className = "warn danger"; box.textContent = "Ad soyad, mesaj ve en az bir iletişim bilgisi girmen gerekiyor."; return; }
-      box.className = "warn success"; box.textContent = "Form yerleşimi hazır. Sonraki adımda bunu WhatsApp veya gerçek e-posta toplama sistemine bağlayacağız.";
+      if(!name || (!phone && !email) || !msg){
+        box.className = "warn danger";
+        box.textContent = "Ad soyad, mesaj ve en az bir iletişim bilgisi girmen gerekiyor.";
+        return;
+      }
+      box.className = "warn success";
+      box.textContent = "Form yerleşimi hazır. Sonraki adımda bunu WhatsApp veya gerçek e-posta toplama sistemine bağlayacağız.";
     }
 
     function clearLeadForm(){
