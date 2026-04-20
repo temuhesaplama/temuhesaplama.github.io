@@ -6,6 +6,7 @@
   <title>Temu Hesaplama</title>
   <style>
     * { box-sizing: border-box; }
+
     :root{
       --bg1:#0b1220;
       --bg2:#111827;
@@ -18,7 +19,9 @@
       --red:#ef4444;
       --yellow:#facc15;
       --blue:#38bdf8;
+      --purple:#a78bfa;
     }
+
     body{
       margin:0;
       font-family:Arial, Helvetica, sans-serif;
@@ -27,29 +30,35 @@
       min-height:100vh;
       padding:18px;
     }
+
     .container{
-      max-width:1200px;
+      max-width:1400px;
       margin:0 auto;
     }
+
     .header{
       text-align:center;
       margin-bottom:18px;
     }
+
     .header h1{
       margin:0;
-      font-size:34px;
+      font-size:36px;
     }
+
     .header p{
       margin:10px 0 0;
       color:var(--muted);
       font-size:15px;
-      line-height:1.5;
+      line-height:1.6;
     }
+
     .main-grid{
       display:grid;
-      grid-template-columns: 1.05fr 1fr;
+      grid-template-columns: 1.05fr 1.2fr;
       gap:18px;
     }
+
     .card{
       background:rgba(23,32,51,.96);
       border:1px solid rgba(255,255,255,.06);
@@ -57,33 +66,39 @@
       padding:18px;
       box-shadow:0 12px 35px rgba(0,0,0,.25);
     }
+
     .section-title{
       font-size:20px;
       font-weight:bold;
       margin:0 0 14px;
       color:#fff;
     }
+
     .mini{
       color:var(--muted);
       font-size:13px;
-      line-height:1.5;
+      line-height:1.6;
       margin-top:-4px;
       margin-bottom:14px;
     }
+
     .form-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:14px;
     }
+
     .full{
       grid-column:1 / -1;
     }
+
     label{
       display:block;
       margin-bottom:7px;
       font-size:13px;
       color:var(--muted);
     }
+
     input, select{
       width:100%;
       padding:13px 12px;
@@ -94,15 +109,18 @@
       font-size:15px;
       outline:none;
     }
+
     input:focus, select:focus{
       border-color:var(--blue);
     }
+
     .btn-row{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:12px;
       margin-top:14px;
     }
+
     button{
       border:none;
       border-radius:12px;
@@ -110,41 +128,58 @@
       font-size:15px;
       font-weight:bold;
       cursor:pointer;
+      transition:.18s ease;
     }
+
+    button:hover{
+      transform:translateY(-1px);
+      opacity:.96;
+    }
+
     .btn-primary{
       background:var(--green);
       color:#fff;
     }
+
     .btn-secondary{
       background:#334155;
       color:#fff;
     }
+
     .results-grid{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:repeat(3, 1fr);
       gap:14px;
     }
+
     .result-box{
       background:#0f172a;
       border:1px solid var(--line);
       border-radius:14px;
       padding:16px;
+      min-height:112px;
     }
+
     .result-title{
       color:#94a3b8;
       font-size:13px;
       margin-bottom:8px;
+      line-height:1.4;
     }
+
     .result-value{
       font-size:24px;
       font-weight:bold;
       line-height:1.2;
       word-break:break-word;
     }
+
     .green{ color:#4ade80; }
     .red{ color:#f87171; }
     .yellow{ color:#fde047; }
     .blue{ color:#67e8f9; }
+    .purple{ color:#c4b5fd; }
+    .white{ color:#ffffff; }
 
     .subcard{
       margin-top:14px;
@@ -153,6 +188,7 @@
       border-radius:14px;
       padding:14px;
     }
+
     .subcard h3{
       margin:0 0 10px;
       font-size:16px;
@@ -165,6 +201,7 @@
       font-size:14px;
       line-height:1.5;
     }
+
     .breakdown div:nth-child(odd){ color:var(--muted); }
     .breakdown div:nth-child(even){ text-align:right; }
 
@@ -178,6 +215,7 @@
       font-size:13px;
       line-height:1.6;
     }
+
     .warn{
       margin-top:12px;
       padding:12px 14px;
@@ -188,16 +226,19 @@
       border:1px solid rgba(250,204,21,.2);
       color:#fef3c7;
     }
+
     .danger{
       background:rgba(239,68,68,.08);
       border:1px solid rgba(239,68,68,.2);
       color:#fecaca;
     }
+
     .success{
       background:rgba(34,197,94,.08);
       border:1px solid rgba(34,197,94,.2);
       color:#dcfce7;
     }
+
     .small{
       font-size:12px;
       color:#94a3b8;
@@ -205,9 +246,14 @@
       line-height:1.5;
     }
 
-    @media (max-width: 980px){
+    @media (max-width: 1180px){
       .main-grid{ grid-template-columns:1fr; }
     }
+
+    @media (max-width: 900px){
+      .results-grid{ grid-template-columns:1fr 1fr; }
+    }
+
     @media (max-width: 700px){
       .form-grid, .results-grid, .btn-row{
         grid-template-columns:1fr;
@@ -222,8 +268,8 @@
     <div class="header">
       <h1>Temu Hesaplama</h1>
       <p>
-        Trendyol satış fiyatına göre net kârını gör, Temu için girmen gereken <b>Temel Fiyat</b>'ı üret,
-        kargo firmasını ve desiyi seçerek iki platformu karşılaştır.
+        Trendyol satış fiyatına göre Temu'da girilmesi gereken Temel Fiyatı, müşteriye görünecek tahmini tutarı,
+        seçilen kargo firması + desiye göre toplam kargoyu, Trendyol ve Temu net kârını tek ekranda gör.
       </p>
     </div>
 
@@ -232,13 +278,13 @@
       <div class="card">
         <h2 class="section-title">Giriş Bilgileri</h2>
         <div class="mini">
-          Temu tarafında hesaplama, KDV hariç Temel Fiyat mantığına göre yapılır.
-          Trendyol tarafında komisyon hesabı KDV hariç bazdan parametrik hesaplanır.
+          Ürün maliyetini <b>senin cebinden çıkan gerçek maliyet</b> olarak gir.
+          Sistem kargoyu firma + desiye göre otomatik hesaplar.
         </div>
 
         <div class="form-grid">
           <div>
-            <label for="urunMaliyeti">Ürün Maliyeti (KDV dahil) ₺</label>
+            <label for="urunMaliyeti">Ürün Maliyeti (₺)</label>
             <input type="number" id="urunMaliyeti" placeholder="Örn: 120" step="0.01">
           </div>
 
@@ -254,30 +300,30 @@
           <div>
             <label for="kargoFirma">Kargo Firması</label>
             <select id="kargoFirma">
-              <option value="yurtici" selected>Yurtiçi Kargo (doğrulanmış)</option>
-              <option value="aras">Aras Kargo (tarife manuel güncellenecek)</option>
-              <option value="dhl">DHL (tarife manuel güncellenecek)</option>
-              <option value="horoz">Horoz (tarife manuel güncellenecek)</option>
+              <option value="aras">ARAS</option>
+              <option value="dhl">DHL</option>
+              <option value="yurtici" selected>Yurtiçi Kargo</option>
+              <option value="horoz">Horoz Lojistik</option>
             </select>
           </div>
 
           <div>
-            <label for="desi">Desi / Kg</label>
+            <label for="desi">Desi / KG</label>
             <input type="number" id="desi" min="0" step="1" value="1" placeholder="Örn: 3">
           </div>
 
           <div>
-            <label for="ekGider">Ek Giderler ₺</label>
+            <label for="ekGider">Ek Giderler (₺)</label>
             <input type="number" id="ekGider" placeholder="Paketleme / operasyon / reklam" step="0.01" value="0">
           </div>
 
           <div>
-            <label for="hedefNetKar">Hedef Net Kâr ₺</label>
+            <label for="hedefNetKar">Hedef Net Kâr (₺)</label>
             <input type="number" id="hedefNetKar" placeholder="Örn: 100" step="0.01" value="0">
           </div>
 
           <div class="full">
-            <label for="trendyolSatis">Trendyol Satış Fiyatı (KDV dahil) ₺</label>
+            <label for="trendyolSatis">Trendyol Satış Fiyatı (₺)</label>
             <input type="number" id="trendyolSatis" placeholder="Örn: 299" step="0.01">
           </div>
 
@@ -292,7 +338,7 @@
           </div>
 
           <div>
-            <label for="kuponGider">İndirim / Kupon Satıcı Payı ₺</label>
+            <label for="kuponGider">İndirim / Kupon Satıcı Payı (₺)</label>
             <input type="number" id="kuponGider" placeholder="Örn: 10" step="0.01" value="0">
           </div>
 
@@ -308,9 +354,11 @@
         </div>
 
         <div class="note">
-          <b>Kargo notu:</b> Yurtiçi fiyatları kargo dokümanındaki tutarlardan gelir;
-          bu tarifeye <b>%2,35 Posta Hizmet Bedeli</b> ve <b>%20 KDV</b> eklenir.
-          Diğer firmalar için şimdilik tarife objesi kod içinde ayrı tutuldu.
+          <b>Kargo hesap mantığı:</b><br>
+          • <b>ARAS:</b> ham fiyat + %2,35 EPH + %20 KDV<br>
+          • <b>DHL:</b> ham fiyat içinde EPH var, sadece %20 KDV eklenir<br>
+          • <b>Yurtiçi:</b> ham fiyat + %2,35 PHB varsayımı + %20 KDV<br>
+          • <b>Horoz:</b> ham fiyat + %20 KDV
         </div>
 
         <div id="uyari" class="warn">
@@ -324,64 +372,92 @@
 
         <div class="results-grid">
           <div class="result-box">
-            <div class="result-title">Kargo Bedeli</div>
-            <div class="result-value blue" id="sonucKargo">0.00 ₺</div>
+            <div class="result-title">Toplam Kargo Bedeli</div>
+            <div class="result-value blue" id="sonucKargoToplam">0.00 ₺</div>
+          </div>
+
+          <div class="result-box">
+            <div class="result-title">Trendyol Satıcıya Kalan Tutar</div>
+            <div class="result-value white" id="sonucTySaticiyaKalan">0.00 ₺</div>
           </div>
 
           <div class="result-box">
             <div class="result-title">Trendyol Net Kâr</div>
-            <div class="result-value" id="sonucTrendyolNet">0.00 ₺</div>
+            <div class="result-value" id="sonucTyNetKar">0.00 ₺</div>
           </div>
 
           <div class="result-box">
             <div class="result-title">Temu Önerilen Temel Fiyat</div>
-            <div class="result-value yellow" id="sonucTemelFiyat">0.00 ₺</div>
+            <div class="result-value yellow" id="sonucTemuTemel">0.00 ₺</div>
+          </div>
+
+          <div class="result-box">
+            <div class="result-title">Temu Müşteriye Görünecek Tutar</div>
+            <div class="result-value purple" id="sonucTemuMusteri">0.00 ₺</div>
+          </div>
+
+          <div class="result-box">
+            <div class="result-title">Temu Satıcıya Ödenecek Tutar</div>
+            <div class="result-value white" id="sonucTemuOdeme">0.00 ₺</div>
           </div>
 
           <div class="result-box">
             <div class="result-title">Temu Net Kâr</div>
-            <div class="result-value" id="sonucTemuNet">0.00 ₺</div>
+            <div class="result-value" id="sonucTemuNetKar">0.00 ₺</div>
           </div>
 
           <div class="result-box">
-            <div class="result-title">Temu Tahmini Müşteri Fiyatı</div>
-            <div class="result-value" id="sonucTemuMusteri">0.00 ₺</div>
+            <div class="result-title">Trendyol Netini Yakalayan Min. Temu Temel Fiyat</div>
+            <div class="result-value yellow" id="sonucTemuMinTemelTyNet">0.00 ₺</div>
           </div>
 
           <div class="result-box">
-            <div class="result-title">Fark Analizi</div>
-            <div class="result-value" id="sonucFark">0.00 ₺</div>
+            <div class="result-title">Hedef Kâr İçin Gerekli Temu Temel Fiyat</div>
+            <div class="result-value yellow" id="sonucTemuMinTemelHedef">0.00 ₺</div>
           </div>
+        </div>
+
+        <div class="subcard">
+          <h3>Kargo Detayı</h3>
+          <div class="breakdown">
+            <div>Firma</div><div id="bKargoFirma">-</div>
+            <div>Desi / KG</div><div id="bKargoDesi">0</div>
+            <div>Ham taşıma bedeli</div><div id="bKargoHam">0.00 ₺</div>
+            <div>EPH / PHB</div><div id="bKargoEph">0.00 ₺</div>
+            <div>KDV</div><div id="bKargoKdv">0.00 ₺</div>
+            <div>Toplam kargo</div><div id="bKargoToplam">0.00 ₺</div>
+          </div>
+          <div class="small" id="bKargoNot">-</div>
         </div>
 
         <div class="subcard">
           <h3>Trendyol Detay</h3>
           <div class="breakdown">
-            <div>Satış (KDV dahil)</div><div id="bTySatis">0.00 ₺</div>
-            <div>Satış (KDV hariç baz)</div><div id="bTyBaz">0.00 ₺</div>
+            <div>Satış fiyatı</div><div id="bTySatis">0.00 ₺</div>
+            <div>Satışın KDV hariç bazı</div><div id="bTyBaz">0.00 ₺</div>
             <div>Komisyon</div><div id="bTyKomisyon">0.00 ₺</div>
             <div>Komisyon KDV</div><div id="bTyKomisyonKdv">0.00 ₺</div>
+            <div>Kupon / indirim satıcı payı</div><div id="bTyKupon">0.00 ₺</div>
+            <div>Satıcıya kalan tutar</div><div id="bTySaticiyaKalan">0.00 ₺</div>
+            <div>Ürün maliyeti</div><div id="bTyMaliyet">0.00 ₺</div>
             <div>Kargo</div><div id="bTyKargo">0.00 ₺</div>
-            <div>Kupon / İndirim</div><div id="bTyKupon">0.00 ₺</div>
             <div>Ek gider</div><div id="bTyEkGider">0.00 ₺</div>
-            <div>Toplam kesinti + gider</div><div id="bTyToplam">0.00 ₺</div>
-            <div>Başa baş satış fiyatı</div><div id="bTyBasabas">0.00 ₺</div>
+            <div>Net kâr</div><div id="bTyNet">0.00 ₺</div>
           </div>
         </div>
 
         <div class="subcard">
           <h3>Temu Detay</h3>
           <div class="breakdown">
-            <div>Girilecek Temel Fiyat (KDV hariç)</div><div id="bTemuTemel">0.00 ₺</div>
-            <div>Satıcıya ödenecek tutar</div><div id="bTemuOdeme">0.00 ₺</div>
+            <div>Önerilen Temel Fiyat</div><div id="bTemuTemel">0.00 ₺</div>
             <div>Servis bedeli</div><div id="bTemuServis">0.00 ₺</div>
             <div>Müşteri KDV</div><div id="bTemuMusteriKdv">0.00 ₺</div>
-            <div>Tahmini müşteri fiyatı</div><div id="bTemuMusteri">0.00 ₺</div>
-            <div>Hedef net kâr</div><div id="bTemuHedef">0.00 ₺</div>
-            <div>Gerçek net kâr</div><div id="bTemuNet">0.00 ₺</div>
-          </div>
-          <div class="small">
-            Temu önerilen temel fiyat, girilen hedef net kârı karşılayacak şekilde ters hesapla üretilir.
+            <div>Müşteriye görünen tutar</div><div id="bTemuMusteri">0.00 ₺</div>
+            <div>Satıcıya ödenecek tutar</div><div id="bTemuOdeme">0.00 ₺</div>
+            <div>Ürün maliyeti</div><div id="bTemuMaliyet">0.00 ₺</div>
+            <div>Kargo</div><div id="bTemuKargo">0.00 ₺</div>
+            <div>Ek gider</div><div id="bTemuEkGider">0.00 ₺</div>
+            <div>Net kâr</div><div id="bTemuNet">0.00 ₺</div>
           </div>
         </div>
       </div>
@@ -389,64 +465,74 @@
   </div>
 
   <script>
-    // --------- DOĞRULANMIŞ YURTİÇİ TARİFESİ ---------
-    // Linkteki fiyatlar ham tutar; KDV ve PHB dahil değil.
-    const YURTICI_RAW = {
-      0:109.70, 1:109.70, 2:109.70, 3:117.31, 4:119.84, 5:139.15,
-      6:145.90, 7:165.07, 8:171.44, 9:182.09, 10:190.16, 11:202.50,
-      12:215.25, 13:222.08, 14:239.50, 15:252.30, 16:259.54, 17:273.99,
-      18:287.60, 19:293.58, 20:299.92, 21:316.95, 22:326.74, 23:339.09,
-      24:345.89, 25:369.26, 26:403.75, 27:422.88, 28:442.04, 29:457.37,
-      30:462.05
-    };
-
-    // --------- MANUEL GÜNCELLENEBİLİR TAŞIYICI YAPISI ---------
-    // Şu an doğrulanmış çalışan firma: yurtiçi.
-    // Diğerlerini sen doğrulanmış tarife tablosu gönderince burada netleştiririz.
+    // -----------------------------
+    // KARGO TABLOLARI
+    // -----------------------------
     const CARRIERS = {
-      yurtici: {
-        label: "Yurtiçi Kargo",
-        ephRate: 0.0235,
-        kdvRate: 0.20,
-        heavyThreshold: 100,
-        heavyFeeRaw: 5350,
-        mode: "table-plus",
-        table: YURTICI_RAW,
-        plusAfter: 30,
-        plusPerDesiRaw: 13.28
-      },
       aras: {
-        label: "Aras Kargo",
+        label: "ARAS",
         ephRate: 0.0235,
         kdvRate: 0.20,
-        heavyThreshold: 100,
+        heavyThreshold: 301,
         heavyFeeRaw: 4250,
-        mode: "manual",
-        table: { 1: 0 },
         plusAfter: 30,
-        plusPerDesiRaw: 0
+        plusPerDesiRaw: 10.46,
+        note: "ARAS fiyatlarına %20 KDV ve %2,35 EPH dahil değildir. 300 desi üstü ağır kargo kabul edildi.",
+        table: {
+          0:82.50, 1:82.50, 2:88.72, 3:97.83, 4:106.63, 5:114.34, 6:124.56, 7:132.11, 8:140.95, 9:149.04,
+          10:154.60, 11:161.29, 12:168.08, 13:174.80, 14:181.56, 15:188.24, 16:198.79, 17:209.29, 18:219.84,
+          19:230.36, 20:234.88, 21:244.24, 22:253.64, 23:262.95, 24:272.35, 25:281.70, 26:290.73, 27:299.75,
+          28:308.80, 29:317.84, 30:326.86
+        }
       },
       dhl: {
         label: "DHL",
         ephRate: 0,
         kdvRate: 0.20,
-        heavyThreshold: 50,
-        heavyFeeRaw: 0,
-        mode: "manual",
-        table: { 1: 0 },
+        heavyThreshold: 51,
+        heavyFeeRaw: 6799.99,
         plusAfter: 30,
-        plusPerDesiRaw: 0
+        plusPerDesiRaw: 32.99,
+        note: "DHL fiyatlarında EPH dahildir, %20 KDV dahil değildir. 50 desi üstü ağır yük kabul edildi.",
+        table: {
+          0:93.99, 1:93.99, 2:93.99, 3:104.99, 4:119.99, 5:131.99, 6:144.99, 7:152.99, 8:162.99, 9:172.99,
+          10:179.99, 11:186.99, 12:196.99, 13:206.99, 14:219.99, 15:229.99, 16:245.99, 17:260.99, 18:277.99,
+          19:292.99, 20:310.99, 21:334.99, 22:354.99, 23:379.99, 24:404.99, 25:429.99, 26:454.99, 27:479.99,
+          28:504.99, 29:529.99, 30:554.99
+        }
+      },
+      yurtici: {
+        label: "Yurtiçi Kargo",
+        ephRate: 0.0235,
+        kdvRate: 0.20,
+        heavyThreshold: 101,
+        heavyFeeRaw: 5350,
+        plusAfter: 30,
+        plusPerDesiRaw: 13.28,
+        note: "Yurtiçi fiyatlarına KDV dahil değildir. PHB için %2,35 varsayımı uygulanır. 100 desi üstü ağır kargo kabul edildi.",
+        table: {
+          0:109.70, 1:109.70, 2:109.70, 3:117.31, 4:119.84, 5:139.15, 6:145.90, 7:165.07, 8:171.44, 9:182.09,
+          10:190.16, 11:202.50, 12:215.25, 13:222.08, 14:239.50, 15:252.30, 16:259.54, 17:273.99, 18:287.60,
+          19:293.58, 20:299.92, 21:316.95, 22:326.74, 23:339.09, 24:345.89, 25:369.26, 26:403.75, 27:422.88,
+          28:442.04, 29:457.37, 30:462.05
+        }
       },
       horoz: {
-        label: "Horoz",
+        label: "Horoz Lojistik",
         ephRate: 0,
         kdvRate: 0.20,
-        heavyThreshold: 999999,
+        heavyThreshold: 100000,
         heavyFeeRaw: 0,
-        mode: "manual",
-        table: { 1: 0 },
         plusAfter: 39,
-        plusPerDesiRaw: 0
+        plusPerDesiRaw: 13.41,
+        note: "Horoz’da 1-39 desi sabit minimum taşıma bedeli, 40-999 desi aralığında desi x 13,41 uygulanır. KDV dahil değildir.",
+        table: {
+          1:528.17, 2:528.17, 3:528.17, 4:528.17, 5:528.17, 6:528.17, 7:528.17, 8:528.17, 9:528.17,
+          10:528.17, 11:528.17, 12:528.17, 13:528.17, 14:528.17, 15:528.17, 16:528.17, 17:528.17,
+          18:528.17, 19:528.17, 20:528.17, 21:528.17, 22:528.17, 23:528.17, 24:528.17, 25:528.17,
+          26:528.17, 27:528.17, 28:528.17, 29:528.17, 30:528.17, 31:528.17, 32:528.17, 33:528.17,
+          34:528.17, 35:528.17, 36:528.17, 37:528.17, 38:528.17, 39:528.17
+        }
       }
     };
 
@@ -463,48 +549,53 @@
       document.getElementById(id).textContent = val;
     }
 
-    function setColorByProfit(elId, value){
+    function setProfitColor(elId, value){
       const el = document.getElementById(elId);
-      el.classList.remove("green","red","yellow","blue");
+      el.classList.remove("green","red","yellow","blue","purple","white");
       if (value > 0) el.classList.add("green");
       else if (value < 0) el.classList.add("red");
       else el.classList.add("yellow");
     }
 
-    function hesapKargo(firmaKey, desi){
+    function hesapKargo(firmaKey, desiInput){
       const carrier = CARRIERS[firmaKey];
-      const d = Math.max(0, Math.round(desi));
+      const d = Math.max(0, Math.ceil(Number(desiInput) || 0));
+
       let raw = 0;
       let eph = 0;
       let kdv = 0;
       let total = 0;
-      let note = "";
+      let note = carrier.note;
 
-      if (firmaKey === "yurtici"){
-        if (d >= carrier.heavyThreshold){
-          raw = carrier.heavyFeeRaw;
-          note = "Ağır kargo bedeli uygulandı.";
-        } else if (d <= 30) {
-          raw = carrier.table[d] ?? carrier.table[30];
+      if (firmaKey === "horoz"){
+        if (d <= 39){
+          raw = 528.17;
         } else {
-          raw = carrier.table[30] + ((d - 30) * carrier.plusPerDesiRaw);
+          raw = d * 13.41;
         }
-        eph = raw * carrier.ephRate;
-        kdv = (raw + eph) * carrier.kdvRate;
-        total = raw + eph + kdv;
-      } else {
-        note = "Bu firma için tarife henüz doğrulanmış tablo ile doldurulmadı.";
-        raw = 0;
         eph = 0;
-        kdv = 0;
-        total = 0;
+        kdv = raw * carrier.kdvRate;
+        total = raw + kdv;
+        return { carrierLabel: carrier.label, desi: d, raw, eph, kdv, total, note };
       }
 
-      return { raw, eph, kdv, total, note, carrierLabel: carrier.label };
+      if (d >= carrier.heavyThreshold){
+        raw = carrier.heavyFeeRaw;
+      } else if (d <= carrier.plusAfter){
+        raw = carrier.table[d] ?? carrier.table[carrier.plusAfter];
+      } else {
+        raw = carrier.table[carrier.plusAfter] + ((d - carrier.plusAfter) * carrier.plusPerDesiRaw);
+      }
+
+      eph = raw * carrier.ephRate;
+      kdv = (raw + eph) * carrier.kdvRate;
+      total = raw + eph + kdv;
+
+      return { carrierLabel: carrier.label, desi: d, raw, eph, kdv, total, note };
     }
 
     function hesapla(){
-      const urunMaliyetiKdvDahil = sayi("urunMaliyeti");
+      const urunMaliyeti = sayi("urunMaliyeti");
       const urunKdvYuzde = sayi("urunKdv");
       const urunKdv = urunKdvYuzde / 100;
 
@@ -519,119 +610,122 @@
       const kuponGider = sayi("kuponGider");
       const temuServisOrani = sayi("temuServis") / 100;
 
-      const uyari = document.getElementById("uyari");
-
       const kargo = hesapKargo(kargoFirma, desi);
-      const kargoBedeli = kargo.total;
+      const toplamKargo = kargo.total;
 
-      // Ürün maliyeti KDV hariç
-      const urunMaliyetiKdvHaric = urunMaliyetiKdvDahil / (1 + urunKdv);
+      // -----------------------------
+      // TRENDYOL
+      // -----------------------------
+      const trendyolSatisBaz = trendyolSatis / (1 + urunKdv);
+      const trendyolKomisyon = trendyolSatisBaz * trendyolKomisyonOrani;
+      const trendyolKomisyonKdv = trendyolKomisyon * komisyonKdvOrani;
 
-      // -------- Trendyol --------
-      const trendyolSatisKdvHaricBaz = trendyolSatis / (1 + urunKdv);
-      const trendyolKomisyonTutar = trendyolSatisKdvHaricBaz * trendyolKomisyonOrani;
-      const trendyolKomisyonKdvTutar = trendyolKomisyonTutar * komisyonKdvOrani;
+      const trendyolSaticiyaKalan =
+        trendyolSatis - trendyolKomisyon - trendyolKomisyonKdv - kuponGider;
 
-      const trendyolToplamGider =
-        urunMaliyetiKdvDahil +
-        kargoBedeli +
-        trendyolKomisyonTutar +
-        trendyolKomisyonKdvTutar +
-        kuponGider +
-        ekGider;
+      const trendyolNetKar =
+        trendyolSaticiyaKalan - urunMaliyeti - toplamKargo - ekGider;
 
-      const trendyolNetKar = trendyolSatis - trendyolToplamGider;
+      // -----------------------------
+      // TEMU - PDF YÖNTEMİNE GÖRE ÖNERİLEN TEMEL FİYAT
+      // Trendyol fiyatından KDV ve platform kesintileri düşülerek oluşturulan temel mantık
+      // -----------------------------
+      let temuTemelFiyat =
+        trendyolSatisBaz - trendyolKomisyon - trendyolKomisyonKdv - kuponGider;
 
-      // Başa baş fiyat (KDV dahil)
-      const breakEvenDenom = 1 - ((trendyolKomisyonOrani * (1 + komisyonKdvOrani)) / (1 + urunKdv));
-      let trendyolBasabas = 0;
-      if (breakEvenDenom > 0){
-        trendyolBasabas = (urunMaliyetiKdvDahil + kargoBedeli + kuponGider + ekGider) / breakEvenDenom;
-      }
+      if (temuTemelFiyat < 0) temuTemelFiyat = 0;
 
-      // -------- Temu --------
-      // Hedef net kara göre girilmesi gereken KDV hariç temel fiyat
-      const temelFiyat = (urunMaliyetiKdvHaric + kargoBedeli + ekGider + hedefNetKar) / (1 + urunKdv);
+      const temuServisTutar = temuTemelFiyat * temuServisOrani;
+      const temuMusteriKdv = (temuTemelFiyat + temuServisTutar) * urunKdv;
+      const temuMusteriTutari = temuTemelFiyat + temuServisTutar + temuMusteriKdv;
+      const temuSaticiOdeme = temuTemelFiyat * (1 + urunKdv);
 
-      const temuSaticiOdeme = temelFiyat * (1 + urunKdv);
-      const temuServisTutar = temelFiyat * temuServisOrani;
-      const temuMusteriKdvTutar = (temelFiyat + temuServisTutar) * urunKdv;
-      const temuMusteriFiyati = temelFiyat + temuServisTutar + temuMusteriKdvTutar;
-      const temuNetKar = temuSaticiOdeme - urunMaliyetiKdvHaric - kargoBedeli - ekGider;
+      const temuNetKar =
+        temuSaticiOdeme - urunMaliyeti - toplamKargo - ekGider;
 
-      // Fark analizi
-      const fark = temuNetKar - trendyolNetKar;
+      // -----------------------------
+      // TRENDYOL NET KÂRINI YAKALAYAN MIN TEMU TEMEL FİYAT
+      // -----------------------------
+      let temuMinTemelTyNet =
+        (urunMaliyeti + toplamKargo + ekGider + trendyolNetKar) / (1 + urunKdv);
 
-      // -------- Sonuç yaz --------
-      setText("sonucKargo", para(kargoBedeli));
-      setText("sonucTrendyolNet", para(trendyolNetKar));
-      setText("sonucTemelFiyat", para(temelFiyat));
-      setText("sonucTemuNet", para(temuNetKar));
-      setText("sonucTemuMusteri", para(temuMusteriFiyati));
+      if (temuMinTemelTyNet < 0) temuMinTemelTyNet = 0;
 
-      let farkMetni = "";
-      if (fark > 0){
-        farkMetni = "Temu +" + para(fark);
-      } else if (fark < 0){
-        farkMetni = "Trendyol +" + para(Math.abs(fark));
-      } else {
-        farkMetni = "Eşit";
-      }
-      setText("sonucFark", farkMetni);
+      // -----------------------------
+      // HEDEF NET KÂR İÇİN GEREKLİ MIN TEMU TEMEL FİYAT
+      // -----------------------------
+      let temuMinTemelHedef =
+        (urunMaliyeti + toplamKargo + ekGider + hedefNetKar) / (1 + urunKdv);
 
+      if (temuMinTemelHedef < 0) temuMinTemelHedef = 0;
+
+      // -----------------------------
+      // EKRANA YAZ
+      // -----------------------------
+      setText("sonucKargoToplam", para(toplamKargo));
+      setText("sonucTySaticiyaKalan", para(trendyolSaticiyaKalan));
+      setText("sonucTyNetKar", para(trendyolNetKar));
+      setText("sonucTemuTemel", para(temuTemelFiyat));
+      setText("sonucTemuMusteri", para(temuMusteriTutari));
+      setText("sonucTemuOdeme", para(temuSaticiOdeme));
+      setText("sonucTemuNetKar", para(temuNetKar));
+      setText("sonucTemuMinTemelTyNet", para(temuMinTemelTyNet));
+      setText("sonucTemuMinTemelHedef", para(temuMinTemelHedef));
+
+      setProfitColor("sonucTyNetKar", trendyolNetKar);
+      setProfitColor("sonucTemuNetKar", temuNetKar);
+
+      // KARGO DETAY
+      setText("bKargoFirma", kargo.carrierLabel);
+      setText("bKargoDesi", String(kargo.desi));
+      setText("bKargoHam", para(kargo.raw));
+      setText("bKargoEph", para(kargo.eph));
+      setText("bKargoKdv", para(kargo.kdv));
+      setText("bKargoToplam", para(kargo.total));
+      setText("bKargoNot", kargo.note);
+
+      // TRENDYOL DETAY
       setText("bTySatis", para(trendyolSatis));
-      setText("bTyBaz", para(trendyolSatisKdvHaricBaz));
-      setText("bTyKomisyon", para(trendyolKomisyonTutar));
-      setText("bTyKomisyonKdv", para(trendyolKomisyonKdvTutar));
-      setText("bTyKargo", para(kargoBedeli));
+      setText("bTyBaz", para(trendyolSatisBaz));
+      setText("bTyKomisyon", para(trendyolKomisyon));
+      setText("bTyKomisyonKdv", para(trendyolKomisyonKdv));
       setText("bTyKupon", para(kuponGider));
+      setText("bTySaticiyaKalan", para(trendyolSaticiyaKalan));
+      setText("bTyMaliyet", para(urunMaliyeti));
+      setText("bTyKargo", para(toplamKargo));
       setText("bTyEkGider", para(ekGider));
-      setText("bTyToplam", para(trendyolToplamGider));
-      setText("bTyBasabas", para(trendyolBasabas));
+      setText("bTyNet", para(trendyolNetKar));
 
-      setText("bTemuTemel", para(temelFiyat));
-      setText("bTemuOdeme", para(temuSaticiOdeme));
+      // TEMU DETAY
+      setText("bTemuTemel", para(temuTemelFiyat));
       setText("bTemuServis", para(temuServisTutar));
-      setText("bTemuMusteriKdv", para(temuMusteriKdvTutar));
-      setText("bTemuMusteri", para(temuMusteriFiyati));
-      setText("bTemuHedef", para(hedefNetKar));
+      setText("bTemuMusteriKdv", para(temuMusteriKdv));
+      setText("bTemuMusteri", para(temuMusteriTutari));
+      setText("bTemuOdeme", para(temuSaticiOdeme));
+      setText("bTemuMaliyet", para(urunMaliyeti));
+      setText("bTemuKargo", para(toplamKargo));
+      setText("bTemuEkGider", para(ekGider));
       setText("bTemuNet", para(temuNetKar));
 
-      setColorByProfit("sonucTrendyolNet", trendyolNetKar);
-      setColorByProfit("sonucTemuNet", temuNetKar);
+      // UYARI
+      const uyari = document.getElementById("uyari");
 
-      const farkEl = document.getElementById("sonucFark");
-      farkEl.classList.remove("green","red","yellow","blue");
-      if (fark > 0) farkEl.classList.add("green");
-      else if (fark < 0) farkEl.classList.add("blue");
-      else farkEl.classList.add("yellow");
-
-      // Uyarı
-      let uyariText = "";
-      let cls = "warn";
-
-      if (!urunMaliyetiKdvDahil || !trendyolSatis){
-        uyariText = "Ürün maliyeti ve Trendyol satış fiyatını girmen lazım.";
-        cls = "warn danger";
-      } else if (kargoFirma !== "yurtici"){
-        uyariText = kargo.carrierLabel + " için tarife şu an doğrulanmış tablo ile yüklenmediği için kargo 0,00 ₺ hesaplanıyor. Şimdilik en doğru sonuç için Yurtiçi seç.";
-        cls = "warn danger";
+      if (!urunMaliyeti || !trendyolSatis){
+        uyari.className = "warn danger";
+        uyari.textContent = "Ürün maliyeti ve Trendyol satış fiyatını girmen gerekiyor.";
       } else if (trendyolNetKar < 0 && temuNetKar < 0){
-        uyariText = "Her iki platformda da zarar görünüyorsun. Fiyatı artırman, maliyeti düşürmen veya hedef kârı yeniden düzenlemen gerekir.";
-        cls = "warn danger";
-      } else if (trendyolNetKar < 0 && temuNetKar >= 0){
-        uyariText = "Trendyol tarafı zararda, Temu tarafı pozitif görünüyor.";
-        cls = "warn success";
+        uyari.className = "warn danger";
+        uyari.textContent = "Her iki platformda da zarar görünüyorsun. Fiyatı yükseltmen veya maliyeti düşürmen gerekir.";
       } else if (trendyolNetKar >= 0 && temuNetKar < 0){
-        uyariText = "Temu tarafı zararda, Trendyol tarafı daha avantajlı.";
-        cls = "warn success";
+        uyari.className = "warn success";
+        uyari.textContent = "Trendyol tarafı pozitif, Temu tarafı bu önerilen temel fiyatla zararda görünüyor.";
+      } else if (trendyolNetKar < 0 && temuNetKar >= 0){
+        uyari.className = "warn success";
+        uyari.textContent = "Trendyol tarafı zararda, Temu tarafı pozitif görünüyor.";
       } else {
-        uyariText = "Hesaplama başarılı. İki platformu net kâra göre karşılaştırabilirsin.";
-        cls = "warn success";
+        uyari.className = "warn success";
+        uyari.textContent = "Hesaplama başarılı. Kartlardaki Trendyol Net Kâr ve Temu Net Kâr alanları satıcının üründen eline kalan tutarı gösterir.";
       }
-
-      uyari.className = cls;
-      uyari.textContent = uyariText;
     }
 
     function sifirla(){
@@ -648,13 +742,15 @@
       document.getElementById("temuServis").value = "11";
 
       [
-        "sonucKargo","sonucTrendyolNet","sonucTemelFiyat","sonucTemuNet","sonucTemuMusteri",
-        "bTySatis","bTyBaz","bTyKomisyon","bTyKomisyonKdv","bTyKargo","bTyKupon","bTyEkGider",
-        "bTyToplam","bTyBasabas","bTemuTemel","bTemuOdeme","bTemuServis","bTemuMusteriKdv",
-        "bTemuMusteri","bTemuHedef","bTemuNet"
-      ].forEach(id => setText(id, "0.00 ₺"));
-
-      setText("sonucFark","0.00 ₺");
+        "sonucKargoToplam","sonucTySaticiyaKalan","sonucTyNetKar","sonucTemuTemel","sonucTemuMusteri","sonucTemuOdeme","sonucTemuNetKar","sonucTemuMinTemelTyNet","sonucTemuMinTemelHedef",
+        "bKargoFirma","bKargoDesi","bKargoHam","bKargoEph","bKargoKdv","bKargoToplam","bKargoNot",
+        "bTySatis","bTyBaz","bTyKomisyon","bTyKomisyonKdv","bTyKupon","bTySaticiyaKalan","bTyMaliyet","bTyKargo","bTyEkGider","bTyNet",
+        "bTemuTemel","bTemuServis","bTemuMusteriKdv","bTemuMusteri","bTemuOdeme","bTemuMaliyet","bTemuKargo","bTemuEkGider","bTemuNet"
+      ].forEach(id => {
+        if (id === "bKargoFirma" || id === "bKargoNot") setText(id, "-");
+        else if (id === "bKargoDesi") setText(id, "0");
+        else setText(id, "0.00 ₺");
+      });
 
       document.getElementById("uyari").className = "warn";
       document.getElementById("uyari").textContent = "Alanları doldurup “Hesapla” butonuna bas.";
