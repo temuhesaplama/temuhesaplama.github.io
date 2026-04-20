@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Temu Hesaplama</title>
+  <meta name="description" content="Temu temel fiyat hesaplama ve Trendyol - Temu karşılaştırma aracı. Kargo, komisyon, maliyet ve net kâr hesabını tek ekranda görün.">
   <style>
     * { box-sizing: border-box; }
 
@@ -21,6 +22,10 @@
       --blue:#38bdf8;
       --purple:#a78bfa;
       --orange:#fb923c;
+    }
+
+    html{
+      scroll-behavior:smooth;
     }
 
     body{
@@ -66,6 +71,114 @@
       border:1px solid rgba(56,189,248,.20);
       color:#dbeafe;
       font-size:13px;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .hero-card{
+      background:linear-gradient(180deg, rgba(23,32,51,.96), rgba(16,24,39,.96));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      padding:26px;
+      box-shadow:0 12px 35px rgba(0,0,0,.25);
+    }
+
+    .hero h2{
+      margin:0 0 12px;
+      font-size:38px;
+      line-height:1.2;
+    }
+
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.8;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .hero-btn{
+      display:inline-block;
+      text-decoration:none;
+      border:none;
+      border-radius:12px;
+      padding:14px 18px;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .hero-btn.primary{
+      background:var(--green);
+      color:#fff;
+    }
+
+    .hero-btn.secondary{
+      background:#1e293b;
+      border:1px solid var(--line);
+      color:#fff;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+
+    .stat-box{
+      background:#0f172a;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+    }
+
+    .stat-label{
+      font-size:13px;
+      color:#94a3b8;
+      margin-bottom:8px;
+    }
+
+    .stat-value{
+      font-size:24px;
+      font-weight:bold;
+      color:#fff;
+    }
+
+    .features{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin:18px 0;
+    }
+
+    .feature-card{
+      background:rgba(23,32,51,.96);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .feature-card h3{
+      margin:0 0 10px;
+      font-size:16px;
+    }
+
+    .feature-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
     }
 
     .nav-tabs{
@@ -149,7 +262,7 @@
       color:var(--muted);
     }
 
-    input, select{
+    input, select, textarea{
       width:100%;
       padding:13px 12px;
       border-radius:12px;
@@ -160,7 +273,12 @@
       outline:none;
     }
 
-    input:focus, select:focus{
+    textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    input:focus, select:focus, textarea:focus{
       border-color:var(--blue);
     }
 
@@ -294,6 +412,36 @@
       color:#dcfce7;
     }
 
+    .section-block{
+      margin-top:18px;
+    }
+
+    .lead-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .faq-item{
+      background:#101827;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
+      margin-bottom:12px;
+    }
+
+    .faq-item h3{
+      margin:0 0 8px;
+      font-size:15px;
+    }
+
+    .faq-item p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
     .ad-box{
       margin-top:18px;
       border:1px dashed rgba(255,255,255,.18);
@@ -316,8 +464,14 @@
     }
 
     @media (max-width:1180px){
-      .grid{
+      .hero,
+      .grid,
+      .lead-grid{
         grid-template-columns:1fr;
+      }
+
+      .features{
+        grid-template-columns:repeat(2,1fr);
       }
     }
 
@@ -331,11 +485,13 @@
       .form-grid,
       .results-grid,
       .results-grid.three,
-      .btn-row{
+      .btn-row,
+      .features{
         grid-template-columns:1fr;
       }
 
-      .brand h1{
+      .brand h1,
+      .hero h2{
         font-size:28px;
       }
 
@@ -352,13 +508,60 @@
         <h1>Temu Hesaplama</h1>
         <p>
           Temu temel fiyat hesaplama ve Trendyol - Temu karşılaştırma aracı.
-          İleride reklam, premium araçlar ve satıcı lead toplama için büyütülebilir yapı.
+          Satıcılar için ücretsiz, hızlı ve profesyonel analiz deneyimi.
         </p>
       </div>
       <div class="pill">Ücretsiz Satıcı Aracı</div>
     </div>
 
-    <div class="nav-tabs">
+    <section class="hero">
+      <div class="hero-card">
+        <h2>Temu’da hangi temel fiyatı girmeliyim?</h2>
+        <p>
+          Ürün maliyetini, kargonu, komisyonunu ve giderlerini tek ekranda hesapla.
+          Trendyol fiyatından yola çıkarak Temu’da girmen gereken temel fiyatı, müşteriye görünecek tahmini fiyatı ve sana kalacak net kârı saniyeler içinde gör.
+        </p>
+        <div class="hero-actions">
+          <a href="#tools" class="hero-btn primary">Hesaplamaya Başla</a>
+          <a href="#leadSection" class="hero-btn secondary">Danışmanlık Talebi Bırak</a>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-label">Hızlı Hesaplama</div>
+          <div class="stat-value">2 Mod</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Desteklenen Kargo</div>
+          <div class="stat-value">4 Firma</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">İleride Eklenebilir</div>
+          <div class="stat-value">Reklam + Premium</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="feature-card">
+        <h3>Hızlı Temu Fiyat Hesabı</h3>
+        <p>Trendyol fiyatından yola çıkıp Temu’da girilecek temel fiyatı tek ekranda çıkarır.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Platform Karşılaştırma</h3>
+        <p>Trendyol ve Temu için hangi platformda daha çok kâr kaldığını anında gösterir.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Otomatik Kargo Hesabı</h3>
+        <p>Firma ve desi seçimine göre taşıma bedelini otomatik hesaplar.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Satıcı Dostu Yapı</h3>
+        <p>Gelecekte reklam, premium araçlar, form toplama ve danışmanlık için uygundur.</p>
+      </div>
+    </section>
+
+    <div id="tools" class="nav-tabs">
       <button class="tab-btn active" onclick="showPage('fiyatPage', this)">Fiyat Hesaplama</button>
       <button class="tab-btn" onclick="showPage('karsilastirmaPage', this)">Karşılaştırma</button>
     </div>
@@ -694,8 +897,81 @@
       </div>
     </div>
 
+    <section id="leadSection" class="section-block">
+      <div class="lead-grid">
+        <div class="card">
+          <h2 class="section-title">Ücretsiz Analiz Talebi</h2>
+          <p class="mini">
+            İleride bu alanı gerçek lead toplama sistemine çevireceğiz. Şimdilik profesyonel görünüm ve yerleşim hazır.
+          </p>
+
+          <div class="form-grid">
+            <div>
+              <label for="leadName">Ad Soyad</label>
+              <input type="text" id="leadName" placeholder="Adınızı yazın">
+            </div>
+            <div>
+              <label for="leadPhone">Telefon / WhatsApp</label>
+              <input type="text" id="leadPhone" placeholder="Telefon numaranız">
+            </div>
+            <div class="full">
+              <label for="leadEmail">E-posta</label>
+              <input type="email" id="leadEmail" placeholder="E-posta adresiniz">
+            </div>
+            <div class="full">
+              <label for="leadMessage">Mesaj</label>
+              <textarea id="leadMessage" placeholder="Kısa bilgi bırakın. Örn: Temu fiyatlandırma danışmanlığı almak istiyorum."></textarea>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="action btn-primary" onclick="fakeLeadSubmit()">Talep Gönder</button>
+            <button class="action btn-secondary" onclick="clearLeadForm()">Temizle</button>
+          </div>
+
+          <div id="leadUyari" class="warn">
+            Bu form şu an demo modunda. Sonraki adımda gerçek WhatsApp veya e-posta entegrasyonu ekleyeceğiz.
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Neden Bu Araç?</h2>
+          <div class="faq-item">
+            <h3>Temu temel fiyatını anlamayı kolaylaştırır</h3>
+            <p>Satıcının kafasını en çok karıştıran nokta, müşteri fiyatı ile temel fiyat farkıdır. Bu araç o geçişi sadeleştirir.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Satıcıya gerçek kârı gösterir</h3>
+            <p>Sadece görünen fiyatı değil, ürün maliyeti, kargo, komisyon ve giderlerden sonra elinde ne kaldığını gösterir.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Danışmanlığa dönüşebilir</h3>
+            <p>Bu siteye daha sonra başvuru formu, WhatsApp butonu, reklam ve premium hesap araçları ekleyerek gelir modeli kurabilirsin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="card">
+        <h2 class="section-title">Sık Sorulan Sorular</h2>
+        <div class="faq-item">
+          <h3>Bu araç ücretsiz mi?</h3>
+          <p>Evet. Şu an ücretsiz kullanım için hazırlandı. İleride gelişmiş raporlar ve ekstra modüller premium olabilir.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Kargo tutarı nasıl hesaplanıyor?</h3>
+          <p>Seçilen kargo firması ve desiye göre taşıma bedeli hesaplanır. Firma notlarına göre KDV, EPH veya PHB eklenir.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Temu müşteri fiyatı kesin mi?</h3>
+          <p>Hayır, bu alan tahmini fiyat mantığında çalışır. Ama karar vermek için oldukça faydalı bir referans verir.</p>
+        </div>
+      </div>
+    </section>
+
     <div class="footer-box">
-      Bu yapı ileride reklam, danışmanlık formu, e-posta toplama, kullanıcı girişi ve premium hesaplayıcı modülleri için uygundur.
+      Bu yapı artık sadece hesap makinesi değil; reklam, danışmanlık, lead toplama ve premium ürün satışı için temel oluşturur.
     </div>
   </div>
 
@@ -771,9 +1047,9 @@
     function showPage(pageId, btn){
       document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
       document.getElementById(pageId).classList.add("active");
-
       document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
+      document.getElementById("tools").scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     function para(v){
@@ -808,11 +1084,9 @@
       let note = carrier.note;
 
       if (firmaKey === "horoz"){
-        if (d <= 39){
-          raw = 528.17;
-        } else {
-          raw = d * 13.41;
-        }
+        if (d <= 39) raw = 528.17;
+        else raw = d * 13.41;
+
         kdv = raw * carrier.kdvRate;
         total = raw + kdv;
         return { carrierLabel: carrier.label, desi: d, raw, eph, kdv, total, note };
@@ -1072,6 +1346,32 @@
 
       document.getElementById("karsilastirmaUyari").className = "warn";
       document.getElementById("karsilastirmaUyari").textContent = "Alanları doldurup “Karşılaştır” butonuna bas.";
+    }
+
+    function fakeLeadSubmit(){
+      const name = document.getElementById("leadName").value.trim();
+      const phone = document.getElementById("leadPhone").value.trim();
+      const email = document.getElementById("leadEmail").value.trim();
+      const msg = document.getElementById("leadMessage").value.trim();
+      const box = document.getElementById("leadUyari");
+
+      if(!name || (!phone && !email) || !msg){
+        box.className = "warn danger";
+        box.textContent = "Ad soyad, mesaj ve en az bir iletişim bilgisi girmen gerekiyor.";
+        return;
+      }
+
+      box.className = "warn success";
+      box.textContent = "Form yerleşimi hazır. Sonraki adımda bunu WhatsApp veya gerçek e-posta toplama sistemine bağlayacağız.";
+    }
+
+    function clearLeadForm(){
+      document.getElementById("leadName").value = "";
+      document.getElementById("leadPhone").value = "";
+      document.getElementById("leadEmail").value = "";
+      document.getElementById("leadMessage").value = "";
+      document.getElementById("leadUyari").className = "warn";
+      document.getElementById("leadUyari").textContent = "Bu form şu an demo modunda. Sonraki adımda gerçek WhatsApp veya e-posta entegrasyonu ekleyeceğiz.";
     }
   </script>
 </body>
