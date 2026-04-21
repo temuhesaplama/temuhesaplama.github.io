@@ -109,7 +109,6 @@
     .ad-box{margin-top:18px;border:1px dashed rgba(255,255,255,.18);border-radius:16px;padding:18px;text-align:center;color:#94a3b8;background:rgba(255,255,255,.02);font-size:14px;line-height:1.6}
     .footer-box{margin-top:18px;text-align:center;color:#94a3b8;font-size:13px;line-height:1.7;padding-bottom:20px}
 
-    /* 4. bölüm için özel düzen */
     .pro-top-summary{
       display:grid;
       grid-template-columns:repeat(4,1fr);
@@ -450,7 +449,7 @@
       </div>
     </div>
 
-    <!-- 4 Düzenlenmiş -->
+    <!-- 4 -->
     <div id="trendyolProPage" class="page">
       <div class="grid">
         <div class="card">
@@ -577,6 +576,18 @@
                   <div class="result-title">Temu Tahmini Müşteri Fiyatı</div>
                   <div class="result-value purple" id="p_sonucTemuMusteri">0.00 ₺</div>
                 </div>
+                <div class="result-box">
+                  <div class="result-title">Temu Satıcıya Ödenecek Tutar</div>
+                  <div class="result-value white" id="p_sonucTemuOdeme">0.00 ₺</div>
+                </div>
+                <div class="result-box">
+                  <div class="result-title">Temu Net Kâr</div>
+                  <div class="result-value" id="p_sonucTemuNetKar">0.00 ₺</div>
+                </div>
+                <div class="result-box">
+                  <div class="result-title">Net Kâr Farkı</div>
+                  <div class="result-value" id="p_sonucNetKarFarki">0.00 ₺</div>
+                </div>
               </div>
               <div class="pro-pill-row">
                 <span class="mini-pill">Temu tarafı referans amaçlıdır</span>
@@ -587,7 +598,7 @@
           </div>
 
           <div class="subcard">
-            <h3>Kesinti ve Kârlılık Detayı</h3>
+            <h3>Trendyol Kesinti ve Kârlılık Detayı</h3>
             <div class="breakdown">
               <div>Satış fiyatı</div><div id="p_bSatis">0.00 ₺</div>
               <div>KDV hariç baz</div><div id="p_bBaz">0.00 ₺</div>
@@ -601,6 +612,18 @@
               <div>Toplam kesinti</div><div id="p_bKesinti">0.00 ₺</div>
               <div>Satıcıya kalan</div><div id="p_bKalan">0.00 ₺</div>
               <div>Net kâr</div><div id="p_bNetKar">0.00 ₺</div>
+            </div>
+          </div>
+
+          <div class="subcard">
+            <h3>Temu Referans Detayı</h3>
+            <div class="breakdown">
+              <div>Temu Temel Fiyat</div><div id="p_bTemuTemel">0.00 ₺</div>
+              <div>Temu Servis Bedeli</div><div id="p_bTemuServis">0.00 ₺</div>
+              <div>Temu Müşteri KDV</div><div id="p_bTemuMusteriKdv">0.00 ₺</div>
+              <div>Müşteriye Görünecek Fiyat</div><div id="p_bTemuMusteri">0.00 ₺</div>
+              <div>Satıcıya Ödenecek Tutar</div><div id="p_bTemuOdeme">0.00 ₺</div>
+              <div>Temu Net Kâr</div><div id="p_bTemuNetKar">0.00 ₺</div>
             </div>
           </div>
 
@@ -977,6 +1000,9 @@
       const temuServisTutar = temuTemel * temuServis;
       const temuMusteriKdv = (temuTemel + temuServisTutar) * urunKdv;
       const temuMusteri = temuTemel + temuServisTutar + temuMusteriKdv;
+      const temuSaticiOdeme = temuTemel * (1 + urunKdv);
+      const temuNetKar = temuSaticiOdeme - alisFiyati - toplamKargo - ekGider;
+      const netKarFarki = temuNetKar - netKar;
 
       const risk = riskAndStatus(netKar, karMarji);
 
@@ -991,9 +1017,19 @@
       setText("p_sonucOnerilen", para(onerilen));
       setText("p_sonucTemuTemel", para(temuTemel));
       setText("p_sonucTemuMusteri", para(temuMusteri));
+      setText("p_sonucTemuOdeme", para(temuSaticiOdeme));
+      setText("p_sonucTemuNetKar", para(temuNetKar));
+      setText("p_sonucNetKarFarki", netKarFarki >= 0 ? "Temu +" + para(netKarFarki) : "Trendyol +" + para(Math.abs(netKarFarki)));
 
       setProfitColor("p_sonucNetKar", netKar);
       setProfitColor("p_sonucKarMarji", karMarji);
+      setProfitColor("p_sonucTemuNetKar", temuNetKar);
+
+      const farkEl = document.getElementById("p_sonucNetKarFarki");
+      farkEl.classList.remove("green","red","yellow","blue","purple","orange","white");
+      if (netKarFarki > 0) farkEl.classList.add("green");
+      else if (netKarFarki < 0) farkEl.classList.add("blue");
+      else farkEl.classList.add("yellow");
 
       const durumEl = document.getElementById("p_sonucDurum");
       durumEl.className = risk.durumClass;
@@ -1012,6 +1048,13 @@
       setText("p_bKalan", para(saticiyaKalan));
       setText("p_bNetKar", para(netKar));
 
+      setText("p_bTemuTemel", para(temuTemel));
+      setText("p_bTemuServis", para(temuServisTutar));
+      setText("p_bTemuMusteriKdv", para(temuMusteriKdv));
+      setText("p_bTemuMusteri", para(temuMusteri));
+      setText("p_bTemuOdeme", para(temuSaticiOdeme));
+      setText("p_bTemuNetKar", para(temuNetKar));
+
       const uyari = document.getElementById("p_uyari");
       const kararKutusu = document.getElementById("p_kararKutusu");
 
@@ -1026,18 +1069,18 @@
       uyari.className = "warn success";
       uyari.textContent = "Trendyol Pro hesaplama başarılı.";
 
-      if (netKar < 0){
+      if (netKar < 0 && temuNetKar < 0){
         kararKutusu.className = "warn danger";
-        kararKutusu.textContent = "Bu ürün bu senaryoda zararda. Başa baş fiyatın yaklaşık " + para(basabas) + ", hedef kârlı fiyatın ise " + para(onerilen) + ".";
-      } else if (karMarji < 5){
-        kararKutusu.className = "warn";
-        kararKutusu.textContent = "Kâr var ama marj düşük. Küçük bir iade, kupon artışı veya maliyet sapması kârlılığı bozabilir.";
-      } else if (karMarji < 12){
+        kararKutusu.textContent = "Hem Trendyol hem Temu tarafı bu senaryoda zayıf görünüyor. Başa baş satış fiyatını ve hedef fiyatı dikkate alıp fiyatı yeniden düşün.";
+      } else if (netKarFarki > 0){
         kararKutusu.className = "warn success";
-        kararKutusu.textContent = "Bu ürün çalışıyor ama orta seviyede. Komisyon veya hizmet bedeli yükselirse tekrar kontrol etmen iyi olur.";
+        kararKutusu.textContent = "Bu senaryoda Temu tarafı daha güçlü görünüyor. Temu net kârın " + para(temuNetKar) + ", Trendyol net kârın " + para(netKar) + ".";
+      } else if (netKarFarki < 0){
+        kararKutusu.className = "warn success";
+        kararKutusu.textContent = "Bu senaryoda Trendyol tarafı daha güçlü görünüyor. Trendyol net kârın " + para(netKar) + ", Temu net kârın " + para(temuNetKar) + ".";
       } else {
-        kararKutusu.className = "warn success";
-        kararKutusu.textContent = "Bu ürün güçlü görünüyor. Net kârın " + para(netKar) + ", kâr marjın %" + karMarji.toFixed(2) + ", Temu referans temel fiyatın " + para(temuTemel) + ".";
+        kararKutusu.className = "warn";
+        kararKutusu.textContent = "Temu ve Trendyol net kârı birbirine çok yakın görünüyor. Kararı operasyon kolaylığı, iade riski ve satış hacmi belirleyebilir.";
       }
     }
 
@@ -1116,10 +1159,11 @@
       document.getElementById("p_hedefKar").value = "100";
       document.getElementById("p_temuServis").value = "11";
 
-      ["p_sonucHizmet","p_sonucKargo","p_sonucKesinti","p_sonucKalan","p_sonucNetKar","p_sonucBasabas","p_sonucOnerilen","p_sonucTemuTemel","p_sonucTemuMusteri"].forEach(id => setText(id, "0.00 ₺"));
+      ["p_sonucHizmet","p_sonucKargo","p_sonucKesinti","p_sonucKalan","p_sonucNetKar","p_sonucBasabas","p_sonucOnerilen","p_sonucTemuTemel","p_sonucTemuMusteri","p_sonucTemuOdeme","p_sonucTemuNetKar"].forEach(id => setText(id, "0.00 ₺"));
       setText("p_sonucKomisyon", "%0.00");
       setText("p_sonucKarMarji", "%0.00");
-      ["p_bSatis","p_bBaz","p_bKomisyon","p_bKomisyonKdv","p_bStopaj","p_bHizmet","p_bKupon","p_bKargo","p_bEkGider","p_bKesinti","p_bKalan","p_bNetKar"].forEach(id => setText(id, "0.00 ₺"));
+      setText("p_sonucNetKarFarki", "0.00 ₺");
+      ["p_bSatis","p_bBaz","p_bKomisyon","p_bKomisyonKdv","p_bStopaj","p_bHizmet","p_bKupon","p_bKargo","p_bEkGider","p_bKesinti","p_bKalan","p_bNetKar","p_bTemuTemel","p_bTemuServis","p_bTemuMusteriKdv","p_bTemuMusteri","p_bTemuOdeme","p_bTemuNetKar"].forEach(id => setText(id, "0.00 ₺"));
 
       const durumEl = document.getElementById("p_sonucDurum");
       durumEl.className = "risk-badge risk-medium";
