@@ -11,7 +11,6 @@
       --bg1:#0b1220; --bg2:#111827; --card:#172033; --line:#2e3b5b;
       --text:#f8fafc; --muted:#cbd5e1; --green:#22c55e; --red:#ef4444;
       --yellow:#facc15; --blue:#38bdf8; --purple:#a78bfa; --orange:#fb923c;
-      --soft:#101827; --soft2:#0f172a;
     }
     html{scroll-behavior:smooth}
     body{
@@ -567,7 +566,7 @@
             <div class="insight-card">
               <h3>Temu Referans Özeti</h3>
               <div class="insight-sub">Bu Trendyol senaryosundan Temu’ya taşıyabileceğin referans değerler.</div>
-              <div class="results-grid">
+              <div class="results-grid three">
                 <div class="result-box">
                   <div class="result-title">Temu Referans Temel Fiyat</div>
                   <div class="result-value yellow" id="p_sonucTemuTemel">0.00 ₺</div>
@@ -583,6 +582,10 @@
                 <div class="result-box">
                   <div class="result-title">Temu Net Kâr</div>
                   <div class="result-value" id="p_sonucTemuNetKar">0.00 ₺</div>
+                </div>
+                <div class="result-box">
+                  <div class="result-title">Temu Net Kâr Yüzdesi</div>
+                  <div class="result-value" id="p_sonucTemuKarMarji">%0.00</div>
                 </div>
                 <div class="result-box">
                   <div class="result-title">Net Kâr Farkı</div>
@@ -1002,6 +1005,7 @@
       const temuMusteri = temuTemel + temuServisTutar + temuMusteriKdv;
       const temuSaticiOdeme = temuTemel * (1 + urunKdv);
       const temuNetKar = temuSaticiOdeme - alisFiyati - toplamKargo - ekGider;
+      const temuKarMarji = temuMusteri > 0 ? (temuNetKar / temuMusteri) * 100 : 0;
       const netKarFarki = temuNetKar - netKar;
 
       const risk = riskAndStatus(netKar, karMarji);
@@ -1019,11 +1023,13 @@
       setText("p_sonucTemuMusteri", para(temuMusteri));
       setText("p_sonucTemuOdeme", para(temuSaticiOdeme));
       setText("p_sonucTemuNetKar", para(temuNetKar));
+      setText("p_sonucTemuKarMarji", "%" + temuKarMarji.toFixed(2));
       setText("p_sonucNetKarFarki", netKarFarki >= 0 ? "Temu +" + para(netKarFarki) : "Trendyol +" + para(Math.abs(netKarFarki)));
 
       setProfitColor("p_sonucNetKar", netKar);
       setProfitColor("p_sonucKarMarji", karMarji);
       setProfitColor("p_sonucTemuNetKar", temuNetKar);
+      setProfitColor("p_sonucTemuKarMarji", temuKarMarji);
 
       const farkEl = document.getElementById("p_sonucNetKarFarki");
       farkEl.classList.remove("green","red","yellow","blue","purple","orange","white");
@@ -1162,6 +1168,7 @@
       ["p_sonucHizmet","p_sonucKargo","p_sonucKesinti","p_sonucKalan","p_sonucNetKar","p_sonucBasabas","p_sonucOnerilen","p_sonucTemuTemel","p_sonucTemuMusteri","p_sonucTemuOdeme","p_sonucTemuNetKar"].forEach(id => setText(id, "0.00 ₺"));
       setText("p_sonucKomisyon", "%0.00");
       setText("p_sonucKarMarji", "%0.00");
+      setText("p_sonucTemuKarMarji", "%0.00");
       setText("p_sonucNetKarFarki", "0.00 ₺");
       ["p_bSatis","p_bBaz","p_bKomisyon","p_bKomisyonKdv","p_bStopaj","p_bHizmet","p_bKupon","p_bKargo","p_bEkGider","p_bKesinti","p_bKalan","p_bNetKar","p_bTemuTemel","p_bTemuServis","p_bTemuMusteriKdv","p_bTemuMusteri","p_bTemuOdeme","p_bTemuNetKar"].forEach(id => setText(id, "0.00 ₺"));
 
